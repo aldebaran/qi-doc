@@ -44,6 +44,14 @@ Reference
 .. autoclass:: qi.Promise
    :members:
 
+   ..   method:: __init__(cb)
+
+     :param cb: a python callable
+
+     If the promise was constructed with a callback in parameter, it will be executed
+     when a future associated to the promise is cancelled.
+     The first argument of the callback is the promise itself.
+
 .. autoclass:: qi.Future
    :members:
 
