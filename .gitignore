@@ -1,2 +1,6 @@
-build/
-qidoc/conf.py
+build*
+*.[oa]
+*~
+*.pyc
+CMakeLists.txt.user
+*.suo
