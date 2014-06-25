@@ -93,3 +93,53 @@ With callback:
 
   #resultReady will be called even if the result is already there.
   f.addCallback(resultReady)
+
+Cancellation support
+====================
+
+In some situations, you will want to create asynchronous operations that can be
+interrupted in the middle of their execution. For that you can set a callback
+to the promise that will be called when someone asks for cancellation. You
+usually don't need anything particular in this callback and you can just check
+for ``isCancelRequested()`` on the promise.
+
+.. code-block:: python
+
+  import time
+  from functools import partial
+
+  class FakeMotion:
+      def doStep(self):
+          time.sleep(0.3)
+          print 'I walked'
+
+      def walk(self, promise):
+          "do steps or cancel before"
+          for i in range(10):
+              if promise.isCancelRequested():
+                  print 'Cancel requested, aborting'
+                  promise.setCanceled()
+                  return
+              self.doStep()
+          # if an error occured, promise.setError("error")
+          # use setValue if everything went ok
+          print 'Walk finished'
+          promise.setValue(None)
+
+      def asyncWalk(self):
+          "start walking and return a cancelable future"
+          promise = qi.Promise(qi.PromiseNoop)
+          qi.async(partial(self.walk, promise))
+          return promise.future()
+
+  m = FakeMotion()
+
+  fut = m.asyncWalk()
+  time.sleep(1)
+  fut.cancel()
+
+  assert fut.wait() == qi.FutureState.Canceled
+  assert fut.isCanceled()
+  assert fut.isFinished()
+
+.. autofunction:: qi.PromiseNoop
