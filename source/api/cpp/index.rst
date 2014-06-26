@@ -3,41 +3,40 @@
 C++ qi API Reference
 --------------------
 
+Base:
+=====
+
 .. toctree::
   :maxdepth: 1
 
   application
+  applicationsession
+  anyvalue
+  anyfunction
+  anyobject
   atomic
   buffer
+  binarycodec
   clock
   eventloop
   future
   iocolor
+  jsoncodec
   log
   macro
   os
   path
   periodictask
-  qi
-  shared_ptr
+  property
+  session
+  signal
+  signature
   stats
-  threadpool
   trackable
   translator
   types
+  url
   version
-
-  signal
-  property
-  applicationsession
-
-  anyvalue
-  object
-  test
 
   ../../cpp-classindex
   ../../cpp-funcindex
-
-
-Libqi missing:
-  #preproc
