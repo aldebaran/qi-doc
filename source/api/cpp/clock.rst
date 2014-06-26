@@ -6,6 +6,14 @@
 qi::Clock
 *********
 
+Summary
+-------
+
+.. cpp:brief::
+
+
+Reference
+---------
 ..
    .. cpp:autoclass:: Duration
    .. cpp:autoclass:: NanoSeconds
@@ -15,13 +23,7 @@ qi::Clock
    .. cpp:autoclass:: Minutes
    .. cpp:autoclass:: Hours
 
-class qi::SteadyClock
-=====================
-
 .. cpp:autoclass:: qi::SteadyClock
-
-class qi::WallClock
-===================
 
 .. cpp:autoclass:: qi::WallClock
 

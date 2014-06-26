@@ -6,8 +6,13 @@
 qi::Version
 ***********
 
-Overview
-========
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::version::Version
 

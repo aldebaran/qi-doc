@@ -3,8 +3,13 @@
 qi::macro
 *********
 
-Macro
------
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 .. cpp:automacro:: QI_API_DEPRECATED
 .. cpp:automacro:: QI_NORETURN

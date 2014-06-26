@@ -6,13 +6,13 @@
 qi::Buffer, qi::BufferReader
 ****************************
 
-class qi::Buffer
-================
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::Buffer
-
-
-class qi::BufferReader
-======================
-
 .. cpp:autoclass:: qi::BufferReader

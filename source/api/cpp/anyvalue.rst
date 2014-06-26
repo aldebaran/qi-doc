@@ -10,6 +10,14 @@ The class `qi::AnyValue` is a dynamic value which can contain anything. It
 works like a normal variable and allows you to store any type and get it back,
 but also use the variable without converting it back to its real type.
 
+Summary
+-------
+
+.. cpp:brief::
+
+Detailed Description
+--------------------
+
 Storing and retrieving a value
 ==============================
 
@@ -84,5 +92,8 @@ The same thing can be achieved with registered types.
   // tuples with annotations in the type system
   std::cout << value[0].as<int>() << ", " << value[1].as<int>()
     << std::endl; // 12, 42
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::AnyValue

@@ -3,13 +3,16 @@
 qi::log
 *******
 
-Brief
------
+Summary
+-------
 
 .. cpp:brief::
 
+Reference
+---------
+
 Macro
------
+=====
 
 .. cpp:automacro:: qiLogCategory
 .. cpp:automacro:: qiLogDebug
@@ -26,20 +29,11 @@ Macro
 .. cpp:automacro:: qiLogFatalF
 
 
-Namespace
----------
-
 .. .. cpp:autonamespace:: qi::log
-
-Enum
-----
 
 .. cpp:autoenum:: qi::LogColor
 .. cpp:autoenum:: qi::LogContextAttr
 .. cpp:autoenum:: qi::LogLevel
-
-Functions
----------
 
 .. cpp:autofunction:: qi::log::addCategory(const std::string&)
 .. cpp:autofunction:: qi::log::addFilter(const std::string&, qi::LogLevel, SubscriberId)
@@ -76,7 +70,7 @@ Functions
 
 
 Deprecated
-----------
+==========
 
 .. cpp:autofunction:: qi::log::setVerbosity(const qi::LogLevel, SubscriberId)
 .. cpp:autofunction:: qi::log::setVerbosity(const std::string&, SubscriberId)

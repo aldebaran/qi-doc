@@ -6,11 +6,16 @@
 qi::path namespace
 ******************
 
-Overview
-========
-
 `qi::path` is a set of functions to find binaries, libraries, data and
 configuration files on the system.
+
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::Path
 

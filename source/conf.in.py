@@ -1,10 +1,8 @@
 project = u'qi SDK Documentation'
 
-extensions.extend(['sphinx.ext.autodoc',
-                   'qiapidoc',
-                   'sphinx.ext.graphviz'])
 
-extensions.extend(['sphinx.ext.autodoc', 'qiapidoc' ,'sphinx.ext.graphviz'])
+extensions.append("qiapidoc")
+extensions.append("qiapidoc.cppbrief")
 
 templates_path = ['../source/_templates']
 

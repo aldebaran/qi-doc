@@ -6,9 +6,14 @@
 qi::Atomic
 **********
 
-class qi::Atomic
-================
-
 `qi::Atomic` provide support for atomics.
+
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::Atomic

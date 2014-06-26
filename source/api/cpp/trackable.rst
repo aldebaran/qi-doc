@@ -6,6 +6,14 @@
 qi::Trackable
 *************
 
+Summary
+-------
+
+.. cpp:brief::
+
+Detailed Description
+--------------------
+
 Rationale
 =========
 
@@ -61,6 +69,9 @@ use ``boost::bind`` if you want your object to be tracked!
   delete my;
 
   signal(); // callback won't be called, no crash
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::Trackable
 

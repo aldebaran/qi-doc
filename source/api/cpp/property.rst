@@ -6,8 +6,16 @@
 qi::Property API
 ****************
 
+Summary
+-------
+
+.. cpp:brief::
+
+Detailed Description
+--------------------
+
 Simple usage
-------------
+============
 
 .. code-block:: c++
 
@@ -22,7 +30,7 @@ A property is basically a simple variable that you can set and get.
   std::cout << p.get() << std::endl;
 
 Signals
--------
+=======
 
 It also allows you to have callbacks called when the property is changed.
 
@@ -53,7 +61,7 @@ This will print::
   implementation-dependent output.
 
 Custom setters and getters
---------------------------
+==========================
 
 You can set a custom getter and setter on a property.
 
@@ -99,5 +107,9 @@ This will print::
 
   If a callback is connected on the property, it is *not* triggered when the
   setter failed to set the new value.
+
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::Property

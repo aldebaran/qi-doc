@@ -33,6 +33,7 @@ C++ qi API Reference
 
   anyvalue
   object
+  test
 
   ../../cpp-classindex
   ../../cpp-funcindex

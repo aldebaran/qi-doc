@@ -6,8 +6,15 @@
 qi::Application
 ***************
 
-Overview
-========
+Application take care of the initialisation of the program.
+
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 `qi::Application` handle application initialisation.
 
