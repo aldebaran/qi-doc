@@ -157,7 +157,7 @@ Example
     qi::LogManagerPtr logger = app.session()->service("LogManager");
 
     // Create LogProvider
-    qi::LogProviderPtr provider = qi::createObject("LogProvider", logger);
+    qi::LogProviderPtr provider = qi::makeLogProvider(logger);
 
     // Register LogProvider to LogManager
     int id = logger->addProvider(provider);
@@ -194,7 +194,7 @@ Example
 .. code-block:: cpp
 
     // Create LogProvider
-    qi::LogProviderPtr provider = qi::createObject("LogProvider", logger);
+    qi::LogProviderPtr provider = qi::makeLogProvider(logger);
 
     // All logs with severity lower or equal to DEBUG will be sent
     provider->setLevel(qi::LogLevel_Debug)
