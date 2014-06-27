@@ -1,6 +1,6 @@
 project = u'qi SDK Documentation'
 
-
+extensions.append('sphinx.ext.autodoc')
 extensions.append("qiapidoc")
 extensions.append("qiapidoc.cppbrief")
 
