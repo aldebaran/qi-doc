@@ -233,9 +233,9 @@ your type manually so that you can specify the signature of the function.
   namespace Graph {
     static bool _qiregisterDrawer() {
       ::qi::ObjectTypeBuilder<Drawer> builder;
-      builder.advertise("draw",
+      builder.advertiseMethod("draw",
           static_cast<void (Drawer::*)(const Point&, Color)>(&Drawer::draw));
-      builder.advertise("draw",
+      builder.advertiseMethod("draw",
           static_cast<void (Drawer::*)(const Point&)>(&Drawer::draw));
       builder.registerType();
       return true;
