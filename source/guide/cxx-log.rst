@@ -1,10 +1,11 @@
-.. _guide-cxx-log:
 
 .. role:: cpp(code)
    :language: cpp
 
 .. role:: bash(code)
    :language: bash
+
+.. _guide-cxx-log:
 
 Documentation of qi::log
 ************************

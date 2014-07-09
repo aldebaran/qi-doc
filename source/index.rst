@@ -14,21 +14,19 @@ API Reference
 
 User Guides
 ===========
- - :ref:`C++: Writing a client<guide-cxx-client>`
- - :ref:`C++: Writing a service<guide-cxx-service>`
- - :ref:`C++: Making a library<guide-cxx-library>`
- - :ref:`C++: Making a module<guide-cxx-module>`
- - :ref:`C++: Registering types in the type system<guide-cxx-register-types>`
- - :ref:`C++: Asynchronous operations<guide-cxx-async>`
- - :ref:`C++: Using logs<guide-cxx-log>`
- - :ref:`C++: Getting and publishing logs<guide-cxx-log-client>`
- - :ref:`C++: Internationalization Guide<guide-cxx-linguist>`
- - :ref:`C++: Handling Paths Guide<guide-cxx-path>`
- - :ref:`Python: Writing a client<guide-py-client>`
- - :ref:`Python: Writing a service<guide-py-service>`
- - :ref:`Python: Getting and publishing logs<guide-py-log-client>`
- - :ref:`Python: from NAOqi 1 to NAOqi 2<guide-py-tonaoqi2>`
- - :ref:`Qicli: How to use qicli<guide-qicli>`
+ - C++: :ref:`guide-cxx-client`
+ - C++: :ref:`guide-cxx-service`
+ - C++: :ref:`guide-cxx-register-types`
+ - C++: :ref:`guide-cxx-async`
+ - C++: :ref:`guide-cxx-log`
+ - C++: :ref:`guide-cxx-log-client`
+ - C++: :ref:`guide-cxx-linguist`
+ - C++: :ref:`guide-cxx-path`
+ - Python: :ref:`guide-py-client`
+ - Python: :ref:`guide-py-service`
+ - Python: :ref:`guide-py-log-client`
+ - Python: :ref:`guide-py-tonaoqi2`
+ - :ref:`guide-qicli`
 
 Design documents
 ================

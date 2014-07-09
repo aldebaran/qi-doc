@@ -1,8 +1,9 @@
-.. _guide-cxx-log-client:
 
 .. cpp:auto_template:: True
 
 .. default-role:: cpp:guess
+
+.. _guide-cxx-log-client:
 
 How to receive and send logs
 ============================

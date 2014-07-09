@@ -1,7 +1,8 @@
-.. _guide-cxx-register-types:
 
 .. role:: cpp(code)
    :language: cpp
+
+.. _guide-cxx-register-types:
 
 Registering types in the type system
 ************************************

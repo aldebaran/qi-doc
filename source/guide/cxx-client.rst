@@ -1,10 +1,11 @@
-.. _guide-cxx-client:
 
 .. cpp:namespace:: qi
 
 .. cpp:auto_template:: True
 
 .. default-role:: cpp:guess
+
+.. _guide-cxx-client:
 
 How to write a qimessaging client in C++
 ========================================
