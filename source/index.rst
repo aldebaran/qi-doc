@@ -16,6 +16,8 @@ User Guides
 ===========
  - :ref:`C++: Writing a client<guide-cxx-client>`
  - :ref:`C++: Writing a service<guide-cxx-service>`
+ - :ref:`C++: Making a library<guide-cxx-library>`
+ - :ref:`C++: Making a module<guide-cxx-module>`
  - :ref:`C++: Registering types in the type system<guide-cxx-register-types>`
  - :ref:`C++: Asynchronous operations<guide-cxx-async>`
  - :ref:`C++: Using logs<guide-cxx-log>`
@@ -26,6 +28,7 @@ User Guides
  - :ref:`Python: Writing a service<guide-py-service>`
  - :ref:`Python: Getting and publishing logs<guide-py-log-client>`
  - :ref:`Python: from NAOqi 1 to NAOqi 2<guide-py-tonaoqi2>`
+ - :ref:`Qicli: How to use qicli<guide-qicli>`
 
 Design documents
 ================
@@ -49,9 +52,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-ChangeLog
-=========
-
-* :ref:`sdk-changelog`
