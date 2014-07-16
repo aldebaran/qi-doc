@@ -93,6 +93,6 @@ when returning objects.
 Reference
 ---------
 
-.. cpp:autoclass:: qi::AnyObject
+.. cpp:autotypedef:: qi::AnyObject
 
 .. cpp:autoclass:: qi::Object<T>
