@@ -1,7 +1,7 @@
-.. _qimessaging-usecase:
+.. _network-usecase:
 
-qiMessaging - Use Case
-======================
+Networking - Use Case
+=====================
 
 Glossary
 --------
@@ -71,4 +71,3 @@ efficient connection mean by using STUN and similar techniques.
 .. image:: /medias/NAOqi2.0-clouddirectconnection.png
 
 see also http://en.wikipedia.org/wiki/STUN and http://en.wikipedia.org/wiki/NAT_traversal
-

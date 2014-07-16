@@ -31,8 +31,9 @@ User Guides
 Design documents
 ================
 
- - :ref:`design-index`
-
+ - :ref:`std-binary-message`
+ - :ref:`network-usecase`
+ - :ref:`std-code-convention`
 
 
 .. toctree::
