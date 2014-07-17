@@ -26,6 +26,7 @@ Base:
   jsoncodec
   log
   macro
+  metaobject
   objecttypebuilder
   os
   path
