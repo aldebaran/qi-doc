@@ -19,12 +19,14 @@ Base:
   buffer
   binarycodec
   clock
+  dynamicobjectbuilder
   eventloop
   future
   iocolor
   jsoncodec
   log
   macro
+  objecttypebuilder
   os
   path
   periodictask

@@ -201,12 +201,15 @@ multithreaded calls, use the MT macro:
     QI_REGISTER_MT_OBJECT(Drawer, draw, drawDone, origin);
   }
 
+.. _guide-cxx-register-types-object-manual:
+
 Doing it manually
 -----------------
 
 The helper won't always allow you to register a class, for example when you
 have method overloading in your class. In these cases, you need to register
-your type manually so that you can specify the signature of the function.
+your type manually with `qi::ObjectTypeBuilder` so that you can specify the
+signature of the function.
 
 .. code-block:: cpp
 
