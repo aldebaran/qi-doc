@@ -288,7 +288,7 @@ Cleaning headers qitype and qimessaging
 +------------------------------------+----------------------------------+
 | qitype/metasignal.hpp              | qi/type/metasignal.hpp           |
 +------------------------------------+----------------------------------+
-| qitype/objectfactory.hpp           | qi/type/objectfactory.hpp        |
+| qitype/objectfactory.hpp           | REMOVED use qi/module.hpp        |
 +------------------------------------+----------------------------------+
 | qitype/objecttypebuilder.hpp       | qi/type/objecttypebuilder.hpp    |
 +------------------------------------+----------------------------------+
