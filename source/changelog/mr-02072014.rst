@@ -39,6 +39,54 @@ libqicore
   * Add unique message identifier.
   * Add lockfree ring buffer to send messages.
 
+libqi and clocks
+----------------
+
+Integration with new clocks has been improved. These new methods has been
+added to Future:
+
+.. code-block:: cpp
+
+  qi::FutureState qi::Future<T>::wait(qi::Duration duration) const;
+  qi::FutureState qi::Future<T>::wait(qi::SteadyClock::time_point timepoint) const;
+
+And these functions were added for async operations:
+
+.. code-block:: cpp
+
+  qi::Future<R> qi::EventLoop::async(boost::function<R()> callback, qi::Duration delay);
+  qi::Future<R> qi::EventLoop::async(boost::function<R()> callback, qi::SteadyClockTimePoint timepoint);
+  qi::Future<R> qi::async(boost::function<R()> callback, qi::Duration delay)
+  qi::Future<R> qi::async(boost::function<R()> callback, qi::SteadyClockTimePoint timepoint)
+
+It is recommanded to stop using integers versions of these functions and use
+the duration overload instead.
+
+.. code-block:: cpp
+
+  // old code:
+  qi::async(myfunc, 50000);
+  // new code:
+  qi::async(myfunc, qi::MilliSeconds(50));
+
+The steady clock overload provides a way to wait for multiple futures for the
+same time.
+
+.. code-block:: cpp
+
+  typedef std::vector<Future<void> > Futures;
+
+  Futures futures;
+  // let's wait for all the future for only 50ms
+  qi::SteadyClockTimePoint timepoint = qi::SteadyClock::now() +
+      qi::MilliSeconds(50);
+  bool ok = true;
+  for (Futures::iterator iter = futures.begin(); iter != futures.end(); ++iter)
+    if (future.wait(timepoint) != qi::FutureState_FinishedWithValue)
+      ok = false;
+  if (!ok)
+    qiLogError() << "There was an error or the operation timed out";
+
 libqimessaging, libqitype, libqi and liqiperf
 ---------------------------------------------
 
