@@ -60,6 +60,20 @@ Merge libqimessaging, libqitype libqiperf and libqi together. You only need to d
   # or
   qi_use_lib(my_lib QI)
 
+New Features
+************
+
+qi::AnyModule
+-------------
+
+A module can contain:
+
+  - function definitions
+  - factories for structures and objects
+
+Modules are cross-language, you can define a module in C++ and use it in python or the reverse.
+They can be used at runtime, so you can import a module and use it without knowing it previously.
+
 
 Bugs Fixes
 **********
@@ -89,6 +103,8 @@ Bug #22658: Debug logs aren't thrown in the log files
 Bug #22739: signal serviceStarted is not triggered
 
 Bug #23166: Incorrect date for copyright at naoqi launch
+
+Bug #23676: Packages are uncompressed in tempfs before being moved to /home
 
 API Modifications
 *****************
