@@ -3,8 +3,8 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::PeriodicTask API
-********************
+qi::PeriodicTask
+****************
 
 qimessaging provides numerous ways of doing async operations, but sometimes you
 need an async operation which repeats itself. This is what you can do with

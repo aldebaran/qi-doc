@@ -3,8 +3,8 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::AnyValue API
-****************
+qi::AnyValue
+************
 
 The class `qi::AnyValue` is a dynamic value which can contain anything. It
 works like a normal variable and allows you to store any type and get it back,

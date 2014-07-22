@@ -3,8 +3,8 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Promise, qi::Future API
-***************************
+qi::Promise, qi::Future
+***********************
 
 
 Summary

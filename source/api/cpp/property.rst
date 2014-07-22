@@ -3,8 +3,8 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Property API
-****************
+qi::Property
+************
 
 Summary
 -------
