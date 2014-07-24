@@ -14,6 +14,7 @@ Base:
   anyvalue
   anyfunction
   anyobject
+  anymodule
   atomic
   buffer
   binarycodec
