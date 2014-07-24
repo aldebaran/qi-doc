@@ -154,6 +154,8 @@ Bug #23166: Incorrect date for copyright at naoqi launch
 
 Bug #23676: Packages are uncompressed in tempfs before being moved to /home
 
+Bug #23945: A service should be stopped when its package is removed
+
 API Modifications
 *****************
 
