@@ -108,6 +108,16 @@ Merge libqimessaging, libqitype libqiperf and libqi together. You only need to d
   # or
   qi_use_lib(my_lib QI)
 
+Python bindings
+---------------
+
+Properties bindings in python have been improved. You can now bind callbacks to
+be notified when properties change, as you can do in C++.
+
+.. code-block:: python
+
+  myobject.property.addCallback(f)
+
 New Features
 ************
 
