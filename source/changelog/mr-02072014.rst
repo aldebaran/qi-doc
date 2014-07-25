@@ -156,6 +156,8 @@ Bug #23676: Packages are uncompressed in tempfs before being moved to /home
 
 Bug #23945: A service should be stopped when its package is removed
 
+Bug #23603: Remove ALTabletService.disableWebviewTouch() from TouchDectection tablet box
+
 API Modifications
 *****************
 
