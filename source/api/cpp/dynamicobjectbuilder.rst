@@ -23,6 +23,8 @@ To build a dynamic object, advertise all its members in the builder and call
 
 .. code-block:: cpp
 
+  #include <qi/type/dynamicobjectbuilder.hpp>
+
   void myfunc()
   {
     std::cout << "Hello world\n";

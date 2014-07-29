@@ -8,11 +8,16 @@ qi::Application
 
 Application takes care of the initialisation and termination of the program.
 
+Summary
+-------
+
+.. cpp:brief::
+
 Detailed Description
 --------------------
 
 `Application` is meant to be instantiated in the main function. It provides a
-`run` function that keep the application running until the user asks for
+`run` function that keeps the application running until the user asks for
 termination (usually through CTRL-C), which is useful when implementing a
 service.
 
@@ -26,6 +31,8 @@ Usage Example
 
 .. code-block:: cpp
 
+  #include <qi/application.hpp>
+
   int main(int argc, char* argv[])
   {
     qi::Application app(argc, argv);
@@ -35,15 +42,8 @@ Usage Example
     app.run();
   }
 
-Summary
--------
-
-.. cpp:brief::
-
 Reference
 ---------
-
-`qi::Application` handle application initialisation.
 
 .. cpp:autoclass:: qi::Application
 
