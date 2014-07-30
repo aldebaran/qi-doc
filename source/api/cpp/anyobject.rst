@@ -3,8 +3,16 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Object API
-**************
+qi::Object
+**********
+
+Summary
+-------
+
+.. cpp:brief::
+
+Detailed Description
+--------------------
 
 qi::AnyObject
 =============
@@ -80,3 +88,11 @@ pointer:
 In the example above, your instance of *MyLogListener* will be kept alive as
 long as the logger service holds a *qi::AnyObject* on it. The same holds true
 when returning objects.
+
+
+Reference
+---------
+
+.. cpp:autotypedef:: qi::AnyObject
+
+.. cpp:autoclass:: qi::Object<T>

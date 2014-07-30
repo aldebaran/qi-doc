@@ -6,4 +6,14 @@
 qi::os
 ******
 
+Basic OS abstracted functions.
+
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
+
 .. cpp:autonamespace:: qi::os

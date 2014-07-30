@@ -1,3 +1,9 @@
+
+.. _guide-cxx-path:
+
+Handling Paths Guide
+====================
+
 \defgroup qipath qi::path
   \brief Provide access to application's path, this include configuration, data, executable and library paths. \n
          See \ref qipathguide for a global overview of path related functions \n
@@ -41,7 +47,6 @@
 
 go to the \ref qipath API reference.
 
-.. _guide-cxx-path:
 
 Overview
 ========

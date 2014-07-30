@@ -1,9 +1,9 @@
-.. _api-version:
+.. _api-session:
 .. cpp:namespace:: qi
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Version
+qi::Session
 ***********
 
 Summary
@@ -11,9 +11,8 @@ Summary
 
 .. cpp:brief::
 
+
 Reference
 ---------
 
-.. cpp:autoclass:: qi::version::Version
-
-.. cpp:autonamespace:: qi::version
+.. cpp:autoclass:: qi::Session

@@ -3,8 +3,17 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Promise, qi::Future API
-***************************
+qi::Promise, qi::Future
+***********************
+
+
+Summary
+-------
+
+.. cpp:brief::
+
+Detailed Description
+--------------------
 
 qi::Future
 ==========
@@ -17,7 +26,6 @@ A `Future` provides a way to wait for and get the result of an asynchronous
 operation. It is the receiving end of a `qi::Future` - `qi::Promise` pair.
 
 *Future* is templated by the type of the underlying value. *void* is permited.
-
 
 The different states of a Future
 --------------------------------
@@ -343,6 +351,9 @@ no-operation callback.
     }
     promise.setValue(acc);
   }
+
+Reference
+---------
 
 .. cpp:autoenum:: FutureState
 

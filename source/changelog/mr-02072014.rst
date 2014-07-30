@@ -1,0 +1,406 @@
+.. _mr-02072014:
+
+Merge Request - July 2014
+=========================
+
+Overview
+********
+
+We intend to clean and factorize our public API.
+Some of our libraries has been merged together to simplify their utilization and we have standardize our API.
+We also add some repositories to split libraries source code, bindings and documentations
+
+Global changes
+**************
+
+Bindings
+--------
+
+Move bindings from qimessaging to their own repository:
+
+- C: sdk/libqi-capi
+- dotnet: sdk/libqi-dotnet
+- java: sdk/libqi-java
+- Javascript: sdk/libqi-js
+- python: sdk/libqi-python
+
+Documentation
+-------------
+
+Create the SDK documetation repository independent from general documentation (sdk/doc).
+
+libqicore
+---------
+
+- Remove qipkg
+- Rewrite Behavior
+- Rewrite LogManager, LogProvider and LogListener.
+
+  * Add unique message identifier.
+  * Add lockfree ring buffer to send messages.
+
+libqi and clocks
+----------------
+
+Integration with new clocks has been improved. These new methods has been
+added to Future:
+
+.. code-block:: cpp
+
+  qi::FutureState qi::Future<T>::wait(qi::Duration duration) const;
+  qi::FutureState qi::Future<T>::wait(qi::SteadyClock::time_point timepoint) const;
+
+And these functions were added for async operations:
+
+.. code-block:: cpp
+
+  qi::Future<R> qi::EventLoop::async(boost::function<R()> callback, qi::Duration delay);
+  qi::Future<R> qi::EventLoop::async(boost::function<R()> callback, qi::SteadyClockTimePoint timepoint);
+  qi::Future<R> qi::async(boost::function<R()> callback, qi::Duration delay)
+  qi::Future<R> qi::async(boost::function<R()> callback, qi::SteadyClockTimePoint timepoint)
+
+It is recommanded to stop using integers versions of these functions and use
+the duration overload instead.
+
+.. code-block:: cpp
+
+  // old code:
+  qi::async(myfunc, 50000);
+  // new code:
+  qi::async(myfunc, qi::MilliSeconds(50));
+
+The steady clock overload provides a way to wait for multiple futures for the
+same time.
+
+.. code-block:: cpp
+
+  typedef std::vector<Future<void> > Futures;
+
+  Futures futures;
+  // let's wait for all the future for only 50ms
+  qi::SteadyClockTimePoint timepoint = qi::SteadyClock::now() +
+      qi::MilliSeconds(50);
+  bool ok = true;
+  for (Futures::iterator iter = futures.begin(); iter != futures.end(); ++iter)
+    if (future.wait(timepoint) != qi::FutureState_FinishedWithValue)
+      ok = false;
+  if (!ok)
+    qiLogError() << "There was an error or the operation timed out";
+
+libqimessaging, libqitype, libqi and liqiperf
+---------------------------------------------
+
+Merge libqimessaging, libqitype libqiperf and libqi together. You only need to depend to QI instead of QIMESSAGING, QITYPE or QIPERF.
+
+*old*
+
+.. code-block:: cmake
+
+  qi_create_lib(my_lib SRC main.cpp DEPENDS QIMESSAGING QITYPE QIPERF)
+  # or
+  qi_use_lib(my_lib QIMESSAGING QITYPE QIPERF)
+
+*new*
+
+.. code-block:: cmake
+
+  qi_create_lib(my_lib SRC main.cpp DEPENDS QI)
+  # or
+  qi_use_lib(my_lib QI)
+
+Python bindings
+---------------
+
+Properties bindings in python have been improved. You can now bind callbacks to
+be notified when properties change, as you can do in C++.
+
+.. code-block:: python
+
+  myobject.property.addCallback(f)
+
+New Features
+************
+
+qi::AnyModule
+-------------
+
+A module can contain:
+
+  - function definitions
+  - factories for structures and objects
+
+Modules are cross-language, you can define a module in C++ and use it in python or the reverse.
+They can be used at runtime, so you can import a module and use it without knowing it previously.
+
+
+Bugs Fixes
+**********
+
+Bug #13825: Object::call should not return a Future
+
+Bug #21158: Fix SEGV because of a profusion of python exceptions
+
+Bug #21637: [ALBehaviorManager] Deadlock on empty behaviors
+
+Bug #22032: qi::Session crashes on close
+
+Bug #22170: [CRASH] Fix crash in qi::py::pyCallMethod
+
+Bug #22243: Session leak in qimessaging-json
+
+Bug #22260: Crash in pyobjectconverter.cpp into libqipython.so
+
+Bug #22279: [CRASH] in libpython2.7.so.1.0
+
+Bug #22321: async qi::Future can sometimes be executed in the same thread than the one generating the future
+
+Bug #22330: Deadlock libqipython
+
+Bug #22658: Debug logs aren't thrown in the log files
+
+Bug #22739: signal serviceStarted is not triggered
+
+Bug #23166: Incorrect date for copyright at naoqi launch
+
+Bug #23676: Packages are uncompressed in tempfs before being moved to /home
+
+Bug #23945: A service should be stopped when its package is removed
+
+Bug #23603: Remove ALTabletService.disableWebviewTouch() from TouchDectection tablet box
+
+API Modifications
+*****************
+
+libqicore
+---------
+
+- LogListener:
+
+  +-----------------------------------+---------------------------------+
+  |           Deprecated              |           New API               |
+  +===================================+=================================+
+  | setVerbosity(qi::LogLevel)        | setLevel(qi::LogLevel)          |
+  +-----------------------------------+---------------------------------+
+  | setCategory(string, qi::LogLevel) | addFilter(string, qi::LogLevel) |
+  +-----------------------------------+---------------------------------+
+
+  *old*
+
+  .. code-block:: cpp
+
+     qi::LogListenerPtr listener = logmanager->getListener()
+     // set global log level to debug
+     listener->setVerbosity(qi::LogLevel_Debug);
+     // add filter to show logs matching foo.* on Verbose
+     listener->setCategory("foo.*", qi::LogLevel_Verbose);
+
+  *new*
+
+  .. code-block:: cpp
+
+     qi::LogListenerPtr listener = logmanager->getListener()
+     // set global log level to debug
+     listener->setLevel(qi::LogLevel_Debug);
+     // add filter to show logs matching foo.* on Verbose
+     listener->addFilter("foo.*", qi::LogLevel_Verbose);
+
+
+
+- LogProvider:
+
+  +--------------------------------------------------+-------------------------------------------------+
+  |                   Deprecated                     |                  New API                        |
+  +==================================================+=================================================+
+  | setVerbosity(qi::LogLevel)                       | setLevel(qi::LogLevel)                          |
+  +--------------------------------------------------+-------------------------------------------------+
+  | setCategory(string, qi::LogLevel)                | addFilter(string, qi::LogLevel)                 |
+  +--------------------------------------------------+-------------------------------------------------+
+  | clearAndSet(vector<pair<string, qi::LogLevel> >) | setFilters(vector<pair<string, qi::LogLevel> >) |
+  +--------------------------------------------------+-------------------------------------------------+
+
+  *old*
+
+  .. code-block:: cpp
+
+     qi::LogProviderPtr provider = qi::makeLogProvider(loggermanager);
+     // set global log level to debug
+     provider->setVerbosity(qi::LogLevel_Debug);
+     // add filter to show logs matching foo.* on Verbose and bar.* on Info
+     provider->setCategory("foo.*", qi::LogLevel_Verbose);
+     provider->setCategory("bar.*", qi::LogLevel_Info);
+     // reset and set filters to foo.* on Verbose
+     // and bar.* to Info
+     filters.push_back(std::make_pair("foo.*", qi::LogLevel_Verbose));
+     filters.push_back(std::make_pair("bar.*", qi::LogLevel_Info));
+     provider->clearAndSet(filters);
+
+  *new*
+
+  .. code-block:: cpp
+
+     qi::LogProviderPtr provider = qi::makeLogProvider(loggermanager);
+     // set global log level to debug
+     provider->setLevel(qi::LogLevel_Debug);
+     // add filter to show logs matching foo.* on Verbose and bar.* on Info
+     provider->addFilter("foo.*", qi::LogLevel_Verbose);
+     provider->addFilter("bar.*", qi::LogLevel_Info);
+     // reset and set filters to foo.* on Verbose
+     // and bar.* to Info
+     filters.push_back(std::make_pair("foo.*", qi::LogLevel_Verbose));
+     filters.push_back(std::make_pair("bar.*", qi::LogLevel_Info));
+     provider->setFilters(filters);
+
+libqitype
+---------
+
+- call(MetaCallType, ...) is removed.
+- call does not return a future anymore.
+
+  +-----------------------------------------------+-------------------------------+
+  |                   Remove                      |            New API            |
+  +===============================================+===============================+
+  | template<typename R> qi::FutureSync<R> call() | template<typename R> R call() |
+  +-----------------------------------------------+-------------------------------+
+
+- To get a future, you need to call async<R>().
+
+*old*
+
+.. code-block:: cpp
+
+  // Sync setValue
+  object.call<void>("setValue", 12).wait();
+  // Async getValue
+  qi::Future<int> fut = object.call<int>("getValue");
+
+*new*
+
+.. code-block:: cpp
+
+  // Sync setValue
+  object.call<void>("setValue", 12);
+  // Async getValue
+  qi::Future<int> fut = object.async<int>("getValue");
+
+libqi
+-----
+
++----------------------------------------+--------------------------------------+
+|              Deprecated                |               New API                |
++========================================+======================================+
+| qi::LogLevel verbosity()               | qi::LogLevel logLevel()              |
++----------------------------------------+--------------------------------------+
+| void setVerbosity(qi::LogLevel)        | void setLogLevel(qi::LogLevel)       |
++----------------------------------------+--------------------------------------+
+| void setVerbosity(string)              | void addFilters(string)              |
++----------------------------------------+--------------------------------------+
+| void setCategory(string, qi::LogLevel) | void addFilter(string, qi::LogLevel) |
++----------------------------------------+--------------------------------------+
+
+*old*
+
+.. code-block:: cpp
+
+   qi::LogLevel level = qi::log::verbosity();
+   // set global log level to level
+   qi::log::setVerbosity(level);
+   // Add filters foo.* to Debug and bar.* to Info
+   qi::log::setVerbosity("foo.*=6:bar.*=4");
+   // Add filter "foo.bar.*" to Warning
+   qi::log::setCategory("foo.bar.*", qi::LogLevel_Warning);
+
+
+*new*
+
+.. code-block:: cpp
+
+   qi::LogLevel level = qi::log::logLevel();
+   // set global log level to level
+   qi::log::setLogLevel(level);
+   // Add filters foo.* to Debug and bar.* to Info
+   qi::log::addFilters("foo.*=6:bar.*=4");
+   // Add filter "foo.bar.*" to Warning
+   qi::log::addfilter("foo.bar.*", qi::LogLevel_Warning);
+
+
+
+Cleaning headers qitype and qimessaging
+---------------------------------------
+
++------------------------------------+----------------------------------+
+|       Deprecated Headers           |            Replacement           |
++====================================+==================================+
+| qimessaging/applicationsession.hpp | qi/applicationsession.hpp        |
++------------------------------------+----------------------------------+
+| qimessaging/autoservice.hpp        | qi/messaging/autoservice.hpp     |
++------------------------------------+----------------------------------+
+| qimessaging/serviceinfo.hpp        | qi/messaging/serviceinfo.hpp     |
++------------------------------------+----------------------------------+
+| qimessaging/session.hpp            | qi/session.hpp                   |
++------------------------------------+----------------------------------+
+| qimessaging/url.hpp                | qi/url.hpp                       |
++------------------------------------+----------------------------------+
+| qitype/anyfunction.hpp             | qi/anyfunction.hpp               |
++------------------------------------+----------------------------------+
+| qitype/anyobject.hpp               | qi/anyobject.hpp                 |
++------------------------------------+----------------------------------+
+| qitype/anyreference.hpp            | qi/type/anyreference.hpp         |
++------------------------------------+----------------------------------+
+| qitype/anyvalue.hpp                | qi/anyvalue.hpp                  |
++------------------------------------+----------------------------------+
+| qitype/binarycodec.hpp             | qi/binarycodec.hpp               |
++------------------------------------+----------------------------------+
+| qitype/dynamicobject.hpp           | qi/type/dynamicobject.hpp        |
++------------------------------------+----------------------------------+
+| qitype/dynamicobjectbuilder.hpp    | qi/type/dynamicobjectbuilder.hpp |
++------------------------------------+----------------------------------+
+| qitype/fwd.hpp                     | qi/type/fwd.hpp                  |
++------------------------------------+----------------------------------+
+| qitype/jsoncodec.hpp               | qi/jsoncodec.hpp                 |
++------------------------------------+----------------------------------+
+| qitype/metamethod.hpp              | qi/type/metamethod.hpp           |
++------------------------------------+----------------------------------+
+| qitype/metaobject.hpp              | qi/type/metaobject.hpp           |
++------------------------------------+----------------------------------+
+| qitype/metaproperty.hpp            | qi/type/metaproperty.hpp         |
++------------------------------------+----------------------------------+
+| qitype/metasignal.hpp              | qi/type/metasignal.hpp           |
++------------------------------------+----------------------------------+
+| qitype/objectfactory.hpp           | REMOVED use qi/module.hpp        |
++------------------------------------+----------------------------------+
+| qitype/objecttypebuilder.hpp       | qi/type/objecttypebuilder.hpp    |
++------------------------------------+----------------------------------+
+| qitype/property.hpp                | qi/property.hpp                  |
++------------------------------------+----------------------------------+
+| qitype/proxyproperty.hpp           | qi/type/proxyproperty.hpp        |
++------------------------------------+----------------------------------+
+| qitype/proxysignal.hpp             | qi/type/proxysignal.hpp          |
++------------------------------------+----------------------------------+
+| qitype/signal.hpp                  | qi/signal.hpp                    |
++------------------------------------+----------------------------------+
+| qitype/signature.hpp               | qi/signature.hpp                 |
++------------------------------------+----------------------------------+
+| qitype/typedispatcher.hpp          | qi/type/typedispatcher.hpp       |
++------------------------------------+----------------------------------+
+| qitype/typeinterface.hpp           | qi/type/typeinterface.hpp        |
++------------------------------------+----------------------------------+
+| qitype/typeobject.hpp              | qi/type/typeobject.hpp           |
++------------------------------------+----------------------------------+
+
+*old*
+
+.. code-block:: cpp
+
+   #include <qimessaging/session.hpp>
+   #include <qimessaging/serviceinfo.hpp>
+   #include <qitype/signal.hpp>
+   #include <qitype/objecttypebuilder.hpp>
+
+*new*
+
+.. code-block:: cpp
+
+   #include <qi/session.hpp>
+   #include <qi/messaging/serviceinfo.hpp>
+   #include <qi/signal.hpp>
+   #include <qi/type/objecttypebuilder.hpp>

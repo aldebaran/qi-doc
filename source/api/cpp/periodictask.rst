@@ -3,18 +3,23 @@
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::PeriodicTask API
-********************
-
-Introduction
-------------
+qi::PeriodicTask
+****************
 
 qimessaging provides numerous ways of doing async operations, but sometimes you
 need an async operation which repeats itself. This is what you can do with
 `qi::PeriodicTask`.
 
+Summary
+-------
+
+.. cpp:brief::
+
+Detailed Description
+--------------------
+
 Using a periodic task
----------------------
+=====================
 
 .. code-block:: cpp
 
@@ -45,7 +50,7 @@ twice at the same time, even if it missed it's deadline. Also, when you call
 stop, it will block until the callback is finished if it's currently running.
 
 About scheduling and callback time compensation
------------------------------------------------
+===============================================
 
 Sometime, your callback may be slow and you may wonder what happens in these
 cases.
@@ -75,5 +80,8 @@ The task will never be called twice even if it takes longer than the period.
 
 Note that it is not recommended to use a periodic task with slow tasks (as
 other qimessaging's async methods).
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::PeriodicTask

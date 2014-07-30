@@ -6,8 +6,13 @@
 qi::stats namespace
 *******************
 
-Overview
-========
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
 
 .. cpp:autoclass:: qi::MinMaxSum
 

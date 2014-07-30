@@ -1,4 +1,3 @@
-.. _guide-cxx-linguist:
 
 .. role:: cpp(code)
    :language: cpp
@@ -11,6 +10,8 @@
 
 .. role:: xml(code)
    :language: xml
+
+.. _guide-cxx-linguist:
 
 Internationalization Guide
 **************************

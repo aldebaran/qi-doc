@@ -1,19 +1,18 @@
-.. _api-version:
+.. _api-url:
 .. cpp:namespace:: qi
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Version
-***********
+qi::Url
+*******
 
 Summary
 -------
 
 .. cpp:brief::
 
+
 Reference
 ---------
 
-.. cpp:autoclass:: qi::version::Version
-
-.. cpp:autonamespace:: qi::version
+.. cpp:autoclass:: qi::Url

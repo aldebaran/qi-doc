@@ -1,7 +1,8 @@
-.. _guide-cxx-register-types:
 
 .. role:: cpp(code)
    :language: cpp
+
+.. _guide-cxx-register-types:
 
 Registering types in the type system
 ************************************
@@ -200,12 +201,15 @@ multithreaded calls, use the MT macro:
     QI_REGISTER_MT_OBJECT(Drawer, draw, drawDone, origin);
   }
 
+.. _guide-cxx-register-types-object-manual:
+
 Doing it manually
 -----------------
 
 The helper won't always allow you to register a class, for example when you
 have method overloading in your class. In these cases, you need to register
-your type manually so that you can specify the signature of the function.
+your type manually with `qi::ObjectTypeBuilder` so that you can specify the
+signature of the function.
 
 .. code-block:: cpp
 
@@ -233,9 +237,9 @@ your type manually so that you can specify the signature of the function.
   namespace Graph {
     static bool _qiregisterDrawer() {
       ::qi::ObjectTypeBuilder<Drawer> builder;
-      builder.advertise("draw",
+      builder.advertiseMethod("draw",
           static_cast<void (Drawer::*)(const Point&, Color)>(&Drawer::draw));
-      builder.advertise("draw",
+      builder.advertiseMethod("draw",
           static_cast<void (Drawer::*)(const Point&)>(&Drawer::draw));
       builder.registerType();
       return true;

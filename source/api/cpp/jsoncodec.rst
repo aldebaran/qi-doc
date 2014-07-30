@@ -1,19 +1,20 @@
-.. _api-version:
+.. _api-jsoncodec:
 .. cpp:namespace:: qi
 .. cpp:auto_template:: True
 .. default-role:: cpp:guess
 
-qi::Version
-***********
+JSON Codec
+**********
 
 Summary
 -------
 
 .. cpp:brief::
 
+
 Reference
 ---------
 
-.. cpp:autoclass:: qi::version::Version
+.. cpp:autofunction:: qi::encodeJSON
 
-.. cpp:autonamespace:: qi::version
+.. cpp:autofunction:: qi::decodeJSON

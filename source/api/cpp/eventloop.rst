@@ -6,6 +6,16 @@
 qi::EventLoop
 *************
 
+Provide an eventloop based on boost::asio.
+
+Summary
+-------
+
+.. cpp:brief::
+
+Reference
+---------
+
 .. cpp:autoclass:: qi::EventLoop
 
 Functions
