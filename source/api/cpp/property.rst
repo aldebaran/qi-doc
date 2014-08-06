@@ -17,13 +17,13 @@ Detailed Description
 Simple usage
 ============
 
-.. code-block:: c++
+.. code-block:: cpp
 
   #include <qi/property.hpp>
 
 A property is basically a simple variable that you can set and get.
 
-.. code-block:: c++
+.. code-block:: cpp
 
   qi::Property<int> p;
   p.set(18);
@@ -34,7 +34,7 @@ Signals
 
 It also allows you to have callbacks called when the property is changed.
 
-.. code-block:: c++
+.. code-block:: cpp
 
   void callback(const int& value) {
     std::cout << "New value: " << value << std::endl;
@@ -65,7 +65,7 @@ Custom setters and getters
 
 You can set a custom getter and setter on a property.
 
-.. code-block:: c++
+.. code-block:: cpp
 
   int getter(const int& value) {
     std::cout << "User is requesting value" << std::endl;
@@ -108,6 +108,30 @@ This will print::
   If a callback is connected on the property, it is *not* triggered when the
   setter failed to set the new value.
 
+You can of course use ``boost::bind`` and `qi::bind` for custom getters and
+setters to bind ``this`` or extra arguments. You can also specify a custom
+setter without specifying a getter. The next example shows these two points.
+
+.. code-block:: cpp
+
+  class MyClass {
+  public:
+    MyClass() : prop(qi::Property<int>::Getter(),
+        qi::bind(&MyClass::propSet, this, _1, _2)) {
+    }
+
+    qi::Property<int> prop;
+
+  private:
+    bool propSet(int& storage, int value) {
+      ++_setCounter; // count the number of times the property has been set
+
+      storage = value;
+      return true;
+    }
+
+    qi::Atomic<int> _setCounter;
+  };
 
 Reference
 ---------
