@@ -131,11 +131,13 @@ Example
       app = qi.ApplicationSession(sys.argv)
       app.start()
 
+      # import qicore
+      mod = qi.module("qicore")
       # Get LogManager service
       logmanager = app.session.service("LogManager")
 
       # Create a provider
-      provider = qi.createObject("LogProvider", logmanager)
+      provider = mod.createObject("LogProvider", logmanager)
 
       # Register LogProvider to LogManager
       providerId = logmanager.addProvider(provider)
