@@ -62,7 +62,7 @@ Here is the content of foo.cpp:
   void eggFun() {
   }
 
-  void register_foo_module(ModuleBuilder* mb) {
+  void register_foo_module(qi::ModuleBuilder* mb) {
     mb->advertiseMethod("egg", &eggFun);
     mb->advertiseFactory<Foo, const SessionPtr&>("Foo");
   }
@@ -77,6 +77,7 @@ Now let us write a CMakeLists.txt to compile it:
   cmake_minimum_required(VERSION 2.8)
   project(foo-module)
   find_package(qibuild)
+  find_package(qimodule)
   qi_sanitize_compile_flags(HIDDEN_SYMBOLS)
 
   qi_create_module(foo SRC foo.cpp)
