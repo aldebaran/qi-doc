@@ -44,6 +44,10 @@ Design documents
    guide/index
    design/index
 
+Changelogs
+==========
+
+ - :ref:`sdk-changelog`
 
 Indices and tables
 ==================
