@@ -8,6 +8,48 @@ Summary
 
 .. cpp:brief::
 
+Detailed Description
+--------------------
+
+`qi::log` provides logging facilities. It allows one to log in different
+categories with different levels.
+
+The user can choose which categories they want to see and at which level. It is
+possible to add handlers to process the log, broadcast them on the network,
+save them in a file, etc.
+
+.. code-block:: cpp
+
+  #include <qi/log.hpp>
+
+  qiLogCategory("myprogram.mymodule");
+
+  int main()
+  {
+    qiLogInfo() << "Hello world";
+
+    // this variant is slower than the one above
+    qiLogError("this.goes.in.another.category") << "Goodbye world";
+
+    return 0;
+  }
+
+.. warning::
+
+  Log calls are lazily evaluated. When you put a function call in your log
+  statements, the function will *not* be called if the log is disabled (at
+  runtime or compilation-time).
+
+  .. code-block:: cpp
+
+    int i = 0;
+
+    int f() { ++i; return 0; }
+
+    void g() {
+      qiLogVerbose() << f(); // f() may not be called!
+    }
+
 Reference
 ---------
 

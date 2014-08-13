@@ -6,12 +6,18 @@
 qi::ApplicationSession
 **********************
 
-`ApplicationSession` is an application with an embedded auto-connected `Session`.
+`ApplicationSession` is an application with an embedded auto-connected
+`Session`.
+
+Summary
+-------
+
+.. cpp:brief::
 
 Detailed Description
 --------------------
 
-`ApplicationSession` is meant to be instantiated in the main function. It work
+`ApplicationSession` is meant to be instantiated in the main function. It works
 pretty much like `Application` but embeds a Session in it. The session is
 connected when `start` is called (or when `run` is called if `start` is never
 called).
@@ -25,6 +31,8 @@ Usage Example
 =============
 
 .. code-block:: cpp
+
+  #include <qi/applicationsession.hpp>
 
   int main(int argc, char* argv[])
   {
@@ -40,15 +48,7 @@ Usage Example
     app.run();
   }
 
-Summary
--------
-
-.. cpp:brief::
-
 Reference
 ---------
-
-`qi::ApplicationSession` is here to handle qi::Application and qi::Session
-auto-magically.
 
 .. cpp:autoclass:: qi::ApplicationSession

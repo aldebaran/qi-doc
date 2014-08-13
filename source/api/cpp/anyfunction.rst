@@ -11,7 +11,6 @@ Summary
 
 .. cpp:brief::
 
-
 Reference
 ---------
 

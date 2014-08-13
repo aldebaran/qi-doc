@@ -44,6 +44,14 @@ Reference
 .. autoclass:: qi.Promise
    :members:
 
+   ..   method:: __init__(cb)
+
+     :param cb: a python callable
+
+     If the promise was constructed with a callback in parameter, it will be executed
+     when a future associated to the promise is cancelled.
+     The first argument of the callback is the promise itself.
+
 .. autoclass:: qi.Future
    :members:
 
@@ -105,16 +113,17 @@ for ``isCancelRequested()`` on the promise.
 
 .. code-block:: python
 
+  import qi
   import time
   from functools import partial
 
-  class FakeMotion:
+  class FakeOperation:
       def doStep(self):
           time.sleep(0.3)
-          print 'I walked'
+          print 'I executed one step'
 
-      def walk(self, promise):
-          "do steps or cancel before"
+      def longOperation(self, promise):
+          "do steps or cancel before the end"
           for i in range(10):
               if promise.isCancelRequested():
                   print 'Cancel requested, aborting'
@@ -123,18 +132,18 @@ for ``isCancelRequested()`` on the promise.
               self.doStep()
           # if an error occured, promise.setError("error")
           # use setValue if everything went ok
-          print 'Walk finished'
+          print 'longOperation finished'
           promise.setValue(None)
 
-      def asyncWalk(self):
-          "start walking and return a cancelable future"
+      def asyncLongOperation(self):
+          "start long operation and return a cancelable future"
           promise = qi.Promise(qi.PromiseNoop)
-          qi.async(partial(self.walk, promise))
+          qi.async(partial(self.longOperation, promise))
           return promise.future()
 
-  m = FakeMotion()
+  m = FakeOperation()
 
-  fut = m.asyncWalk()
+  fut = m.asyncLongOperation()
   time.sleep(1)
   fut.cancel()
 

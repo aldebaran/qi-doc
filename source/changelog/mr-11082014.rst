@@ -1,0 +1,48 @@
+.. _mr-11082014:
+
+Merge Request - August 2014
+===========================
+
+Overview
+********
+
+This merge request is mostly a bugfix merge request. Lots of unit tests were
+also fixed.
+
+Python bindings
+***************
+
+waitForService
+--------------
+
+qi.Session.waitForService was bound in Python.
+
+Async calls
+-----------
+
+Async calls were fixed. You can make an async call like this:
+
+.. code-block:: python
+
+  obj.myFunc(_async=True)
+
+  future = session.waitForService("MyService", _async=True)
+
+Using modules
+-------------
+
+You can now use modules from Python (though you still can't write them in
+Python). You can load a module like this:
+
+.. code-block:: python
+
+  mod = qi.module("mymodule")
+  cat = mod.createObject("Cat", "an argument")
+  cat.meow()
+
+Bugs Fixes
+**********
+
+- https://redmine.aldebaran.lan/issues/24164
+- https://redmine.aldebaran.lan/issues/23495
+- https://redmine.aldebaran.lan/issues/24246

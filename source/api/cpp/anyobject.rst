@@ -36,15 +36,20 @@ asynchronous. You can also connect signals and change properties.
 
 .. code-block:: cpp
 
+  // do a synchronous call
   obj.call<bool>("draw", Graph::Point(10, 20), Graph::Green);
 
+  // do an ansynchronous call
   qi::Future<bool> future =
     obj.async<bool>("draw", Graph::Point(10, 20), Graph::Green);
   // do stuff...
   future.wait();
 
-  obj.connect("drawDone", &mycallback);
+  // connect a signal and disconnect it
+  int id = obj.connect("drawDone", &mycallback);
+  obj.disconnect(id);
 
+  // set a property and get it
   obj.setProperty("origin", Graph::Point(0, 12));
   Graph::Point p = obj.property<Graph::Point>("origin");
   std::cout << p.y << std::endl; // 12
