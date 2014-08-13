@@ -100,4 +100,4 @@ Reference
 
 .. cpp:autotypedef:: qi::AnyObject
 
-.. cpp:autoclass:: qi::Object<T>
+.. cpp:autoclass:: qi::Object
