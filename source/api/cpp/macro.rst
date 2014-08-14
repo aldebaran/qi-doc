@@ -1,7 +1,7 @@
 .. _api-macro:
 
-qi::macro
-*********
+qi helper macros
+****************
 
 Summary
 -------
