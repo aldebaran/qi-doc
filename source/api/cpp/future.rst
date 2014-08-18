@@ -6,6 +6,13 @@
 qi::Promise, qi::Future
 ***********************
 
+The promise and future concepts allow one to provide a result asynchronously.
+The implementor creates a promise for the result and returns the future
+contained in the promise. The caller can then use the result of the future
+later.
+
+You can see a :ref:`complete usage example<future_usage>` at the end of this
+document.
 
 Summary
 -------
@@ -18,35 +25,32 @@ Detailed Description
 qi::Future
 ==========
 
-.. code-block:: c++
-
-  #include <qi/future.hpp>
-
 A `Future` provides a way to wait for and get the result of an asynchronous
 operation. It is the receiving end of a `qi::Future` - `qi::Promise` pair.
 
-*Future* is templated by the type of the underlying value. *void* is permited.
+*Future* is templated by the type of the underlying value. *void* is permitted.
 
 The different states of a Future
---------------------------------
+................................
 
-A future can be in multiple states represented by `FutureState` :
+A future can be in multiple states represented by `FutureState`:
 
-- FutureState_None: The Future is not tied to a Promise, and will never change state.
+- FutureState_None: The Future is not tied to a Promise, and will never change
+  state.
 - FutureState_Running: The future is tied to a Promise, and the asynchronous
   operation has not finished yet.
 - FutureState_Canceled: The operation was successfully canceled.
 - FutureState_FinishedWithError: The operation finished with an error.
-- FutureState_FinishedWithValue: The operation finished and its return value is available.
+- FutureState_FinishedWithValue: The operation finished and its return value is
+  available.
 
 Getting the state and waiting for a Future
-------------------------------------------
+..........................................
 
-There are multiple ways to handle a future. The first is to *ignore* it,
-and cast it to the underlying value type, or use the `qi::Future<T>::value` method.
-In that case, the call will block until the Future leaves the *running* state.
-Then if a value if available, it will be returned. Otherwise a `FutureException`
-will be raised:
+There are multiple ways to handle a future. The first is to use the
+`qi::Future<T>::value` method. In that case, the call will block until the
+Future leaves the *running* state.  Then if a value if available, it will be
+returned. Otherwise a `FutureException` will be raised:
 
 .. code-block:: cpp
 
@@ -54,16 +58,16 @@ will be raised:
 
   int callIt()
   {
-    int i = someOperation(); // wait, then get the value or throw
+    int i = someOperation().value(); // wait, then get the value or throw
     return i;
   }
 
 If you do not wish to wait forever, or want to handle Future error without
 catching an exception, you can use `Future<T>::wait` (timeout):
-This function waits at most the specified time in milliseconds, and return
+this function waits at most the specified time in milliseconds, and return
 a `FutureState`. You can then safely call `Future<T>::value` or
-`Future<T>::error`, if future is in state *FutureState_FinishedWithValue* or
-*FutureState_FinishedWithError* respectively:
+`Future<T>::error`, if future is in state `FutureState_FinishedWithValue` or
+`FutureState_FinishedWithError` respectively:
 
 .. code-block:: cpp
 
@@ -85,11 +89,11 @@ a `FutureState`. You can then safely call `Future<T>::value` or
   }
 
 Future notification
---------------------
+...................
 
 Alternatively, you can get notified of Future completion asynchronously using
 `Future<T>::connect`. This function accepts a callback function or
-functor with signature *void (qi::Future<T> f)*.
+functor with signature ``void (qi::Future<T> f)``.
 
 The Future guarantees you that your callback function will be called once and
 only once, when or if the Future leaves the *Running* state (that is, enters
@@ -114,8 +118,8 @@ connect.
 .. _future-connect:
 
 connect() accepts extra arguments after the callback: values or placeholders
-that will be bound to the call(similarly to how *boost::bind* works). If
-the first argument is a boost::weak_ptr, or inherits from `qi::Trackable`,
+that will be bound to the call(similarly to how ``boost::bind`` works). If
+the first argument is a ``boost::weak_ptr``, or inherits from `qi::Trackable`,
 then the callback will not be called if the weak_ptr cannot be locked, or
 if the Trackable was destroyed:
 
@@ -126,6 +130,7 @@ if the Trackable was destroyed:
   public:
     void onOpFinished(qi::Future<int> op, int opNumber);
   };
+
   void safe_async_op(boost::shared_ptr<Foo> foo, int opNumber)
   {
     qi::Future<int> future = someOperation();
@@ -136,20 +141,25 @@ if the Trackable was destroyed:
   }
 
 Future cancellation
--------------------
+...................
 
-An async operation that returns a Future can support cancellation.
-To check if a future you have can be canceled, use
-`Future<T>::isCancelable`.
+An async operation that returns a Future can support cancellation.  To check if
+a future you have can be canceled, use `isCancelable`.
 
-If *isCancelable* returns true, you can try to abort the operation by calling
-`Future<T>::cancel`. Depending on the operation and on
-the timing of your call, your cancel request might be ignored (for example,
-if it is received too late and a value is already available). But you can
-expect the Future to hastily leave the *Running* state one way or an other.
+If `isCancelable` returns true, you can try to abort the operation by calling
+`cancel`. Depending on the operation and on the timing of your call, your
+cancel request might be ignored (for example, if it is received too late and a
+value is already available). But you can expect the Future to hastily leave the
+*Running* state one way or an other.
+
+The property *cancellable* of a future is defined at the construction of the
+promise. You rarely need to check if a future is cancellable, as the
+specification of the function which returned it should tell whether it is
+cancellable or not.
 
 qi::Promise
 ===========
+
 .. _api-promise:
 
 A `qi::Promise` is an object that can create and satisfy a `qi::Future`.
@@ -162,6 +172,7 @@ same object). The next example illustrates it's basic use case:
   {
     qi::Promise<int> promise;
     // start an asynchronous operation, holding the promise
+    // note that starting threads like that is bad practice, use qi::async
     boost::thread(someAsynchronousOp, promise);
     return promise.future();
   }
@@ -181,25 +192,37 @@ same object). The next example illustrates it's basic use case:
 
 In plain English:
 
-- Create a *Promise* and return the future() obtained with `Promise::future`.
+- Create a `Promise` and return the ``future()`` obtained with
+  `Promise::future`.
 - Transmit the *Promise* to the asynchronously executing code.
-- Notify of successful completion with `Promise::setValue` or `Promise::setError`.
-- Only one of the two functions above must be called, and only once per *Promise*.
+- Notify of successful completion with `Promise::setValue` or
+  `Promise::setError`.
+- Only one of the two functions above must be called, and only once per
+  `Promise`.
 
 Supporting cancellation
------------------------
+.......................
 
 If your asynchronous operation can be canceled, you must provide a callback
-with signature *void(qi::Promise<T>)* to the *Promise* constructor.
+with signature ``void(qi::Promise<T>)`` to the `Promise` constructor. You can
+provide `qi::PromiseNoop` if you don't have any specific action to do upon
+cancellation.
 
 This callback will then be called if a cancellation request is received by a
-connected *Future*. This callback is expected to ensure that the connected *Future*
-hastily leaves the *Running* state, by calling one of `Promise::setValue`,
-`Promise::setError` and `Promise::setCanceled`.
-However this call does not have to be made synchronously.
+connected `Future`. This callback is expected to ensure that the connected
+`Future` hastily leaves the *Running* state, by calling one of
+`Promise::setValue`, `Promise::setError` and `Promise::setCanceled`.
+However this call does not have to be made synchronously in the cancellation
+callback.
+
+If you used `qi::PromiseNoop`, you can rely on `Promise::isCancelRequested` to
+check at a given point if the user requested a cancellation.
+
+You can see :ref:`an example with cancellation support<future_usage_cancel>` at
+the end of this document.
 
 Controlling callback execution
-------------------------------
+..............................
 
 When one of the three state-changing functions listed above is called on
 a *Promise*, callbacks registered to the connected *Future* will be
@@ -208,41 +231,41 @@ or asynchronously using a thread from an internal thread pool, by passing
 one of *FutureCallbackType_Sync* and *FutureCallbackType_Async* to the
 *Promise* constructor.
 
-
 qi::FutureSync
 ==============
-.. _api-futuresync:
 
 `qi::FutureSync<T>` is a lightweight wrapper on top of
-`qi::Future<T>` that will wait on the *Future* in its destructor
-if the *Future* was ignored by the user.
+`qi::Future<T>` that will wait on the `Future` in its destructor
+if the `Future` was ignored by the user.
 
 It is intended to be used as a way to provide a default apparent
 synchronous-blocking behavior to a function, that can be changed into
-an asynchronous behavior by handling the resulting *FutureSync*.
+an asynchronous behavior by handling the resulting `FutureSync`.
 
 Returning a FutureSync
-----------------------
+......................
 
-You can simply change the returned type from *Future* to *FutureSync* in the
-::ref:`basic example<api-promise>`: The returned *Future* will transparently
-convert to a *FutureSync*.
+You can simply change the returned type from `Future` to `FutureSync` in the
+:ref:`basic example<api-promise>`. The returned `Future` will transparently
+convert to a `FutureSync`.
 
 Calling a function returning a FutureSync
------------------------------------------
+.........................................
 
-*FutureSync* follow this simple rule: The destructor will call
+`FutureSync` follow this simple rule: The destructor will call
 `Future::wait` from its destructor, unless:
 
-- It is copied into another *Future* or *FutureSync*
-- `FutureSync::async` or any of the Future function is called (*wait*, *connect*, ...)
+- It is copied into another `Future` or `FutureSync`
+- `FutureSync::async` or any of the Future function is called (`wait`,
+  `connect`, ...)
 
-*FutureSync* also has a cast operator that allows you to use the returned value
+`FutureSync` also has a cast operator that allows you to use the returned value
 transparently.
 
 .. code-block:: cpp
 
   qi::FutureSync<int> someFunction();
+
   void test()
   {
     someFunction(); // will wait
@@ -254,11 +277,13 @@ transparently.
                                             // value(), may throw on error
   }
 
+.. _future_usage:
+
 Implementing an asynchronous function
 =====================================
 
 Simple implementation
----------------------
+.....................
 
 Here is an example of an asynchronous function implementation that supports
 cancellation.
@@ -276,6 +301,8 @@ First, ``calculate`` must return a future and we must create a function to do
 the actual work.
 
 .. code-block:: cpp
+
+  #include <qi/future.hpp>
 
   class Worker {
     public:
@@ -316,8 +343,10 @@ more complex and this could have been done just by calling `qi::async`. What we
 can do now is to support cancellation so that one can call `cancel()` on the
 returned future to abort the action.
 
+.. _future_usage_cancel:
+
 Cancellation support
---------------------
+....................
 
 Promises are cancellable when they are given a cancellation callback at
 construction. You usually don't need this callback so you can just pass the
@@ -355,10 +384,12 @@ no-operation callback.
 Reference
 ---------
 
-.. cpp:autoenum:: FutureState
+.. cpp:autoenum:: qi::FutureState
 
 .. cpp:autoclass:: qi::Future
 
 .. cpp:autoclass:: qi::Promise
 
 .. cpp:autoclass:: qi::FutureSync
+
+.. cpp:autofunction:: qi::PromiseNoop
