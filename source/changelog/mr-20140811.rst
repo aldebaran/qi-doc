@@ -1,4 +1,4 @@
-.. _mr-11082014:
+.. _mr-20140811:
 
 Merge Request - August 2014
 ===========================
@@ -40,8 +40,8 @@ Python). You can load a module like this:
   cat = mod.createObject("Cat", "an argument")
   cat.meow()
 
-Bugs Fixes
-**********
+Redmine issues
+**************
 
 - https://redmine.aldebaran.lan/issues/24164
 - https://redmine.aldebaran.lan/issues/23495

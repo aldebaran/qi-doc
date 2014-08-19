@@ -6,5 +6,6 @@ SDK ChangeLog
 .. toctree::
   :maxdepth: 1
 
-  mr-02072014
-  mr-11082014
+  mr-20140702
+  mr-20140811
+  mr-20140819

@@ -1,4 +1,4 @@
-.. _mr-02072014:
+.. _mr-20140702:
 
 Merge Request - July 2014
 =========================
@@ -133,8 +133,8 @@ Modules are cross-language, you can define a module in C++ and use it in python 
 They can be used at runtime, so you can import a module and use it without knowing it previously.
 
 
-Bugs Fixes
-**********
+Redmine issues
+**************
 
 Bug #13825: Object::call should not return a Future
 
