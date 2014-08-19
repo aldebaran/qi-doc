@@ -75,7 +75,7 @@ Macro
 
 .. cpp:autoenum:: qi::LogColor
 .. cpp:autoenum:: qi::LogContextAttr
-.. cpp:autoenum:: qi::LogLevel
+.. .. cpp:autoenum:: qi::LogLevel
 
 .. cpp:autofunction:: qi::log::addCategory(const std::string&)
 .. cpp:autofunction:: qi::log::addFilter(const std::string&, qi::LogLevel, SubscriberId)
