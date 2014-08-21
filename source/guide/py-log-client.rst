@@ -1,7 +1,7 @@
 .. _guide-py-log-client:
 
-How to receive logs form NAOqi SDK in Python
-============================================
+How to receive and send logs in Python
+======================================
 
 Introduction
 ------------
@@ -125,9 +125,6 @@ Example
   from ctypes import *
 
   def main(argv):
-      # Load all Provider symbols
-      cdll.LoadLibrary(qi.path.findLib("logprovider"))
-
       app = qi.ApplicationSession(sys.argv)
       app.start()
 
