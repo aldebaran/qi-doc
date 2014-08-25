@@ -43,14 +43,14 @@ returned paths were always taken from */usr* since the executable was
 if it is located in a SDK, with a fallback to the old behavior.  This is useful
 for dynamic module loading.
 
-SDK Feature
-***********
+LogManager
+**********
 
-The LogManager now hold an ring buffer that allow to get past logs comming
+The LogManager now holds a ring buffer that allows to get past logs coming
 before you register your LogListener to it.
 
-- There is and ring buffer of 500 messages.
-- You can get it by subscribe to onLogMessagesWithBacklog.
+- There is a ring buffer of 500 messages.
+- You can get it by subscribing to onLogMessagesWithBacklog.
 
 .. code-block:: cpp
 
