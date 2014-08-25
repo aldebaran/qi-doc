@@ -43,6 +43,44 @@ returned paths were always taken from */usr* since the executable was
 if it is located in a SDK, with a fallback to the old behavior.  This is useful
 for dynamic module loading.
 
+SDK Feature
+***********
+
+The LogManager now hold an ring buffer that allow to get past logs comming
+before you register your LogListener to it.
+
+- There is and ring buffer of 500 messages.
+- You can get it by subscribe to onLogMessagesWithBacklog.
+
+.. code-block:: cpp
+
+  void onLogMessages(std::vector<qi::LogMessage> msgs)
+  {
+    for (unsigned int i = 0; i < msgs.size(); ++i)
+    {
+      qi::LogMessage msg = msgs.at(i);
+      std::stringstream ss;
+      ss << msg.level
+         << " " << msg.category
+         << " " << msg.message
+         << std::endl;
+      std::cout << ss.str() << std::endl;
+    }
+  }
+
+  int main(int argc, char** argv)
+  {
+    qi::ApplicationSession app(argc, argv);
+    app.start();
+
+    app.loadModule("qicore");
+
+    qi::LogListenerPtr listener = logger->getListener();
+
+    listener->onLogMessagesWithBacklog.connect(&onLogMessages);
+    app.run();
+  }
+
 Bug fixes
 *********
 
@@ -65,3 +103,4 @@ Redmine issues
 - https://redmine/issues/16461
 - https://redmine/issues/17970
 - https://redmine/issues/15310
+- https://redmine/issues/20594
