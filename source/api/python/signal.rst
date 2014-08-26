@@ -10,9 +10,17 @@ Signal allows communication between threads. One thread emits events, other thre
 
 .. warning::
 
-   In python services, signals must be created before register the service to be advertised.
+  In Python services, signals must be created before registering the service on
+  the session.
 
-A type can be specified in the constructor of the signal, otherwise any value are supported.
+A type can be specified in the constructor of the signal, otherwise any value is supported.
+
+.. warning::
+
+  ``disconnect`` is a blocking method which will wait for the callback to
+  finish (except if it's called from withing the callback). The signal
+  destruction is also blocking. These two cases may cause deadlocks in your
+  code, be careful.
 
 Reference
 =========

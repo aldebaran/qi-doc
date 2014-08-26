@@ -84,6 +84,12 @@ running invocations of the subscriber have finished. This gives you the strong
 guarantee than once `disconnect` has returned, your callback function is not
 being called, and will never be called again.
 
+.. warning::
+
+  `disconnect` is a blocking method which will wait for the callback to finish
+  (except if it's called from withing the callback). The signal destruction is
+  also blocking. These two cases may cause deadlocks in your code, be careful.
+
 Triggering the signal
 =====================
 
