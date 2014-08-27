@@ -262,7 +262,7 @@ register a factory which will just call the default constructor, use:
   // you can put that in a namespace
   QI_REGISTER_OBJECT_FACTORY_CONSTRUCTOR(Graph::Drawer);
 
-This will create a factory named `"Graph::Drawer"`. If you want a different
+This will create a factory named ``"Graph::Drawer"``. If you want a different
 name, you can use:
 
 .. code-block:: cpp
