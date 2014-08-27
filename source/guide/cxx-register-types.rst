@@ -247,6 +247,12 @@ signature of the function.
     static bool __qi_registrationDrawer = _qiregisterDrawer();
   }
 
+If you need your object to be multithreaded, call:
+
+.. code-block:: cpp
+
+  builder.setThreadingModel(qi::ObjectThreadingModel_MultiThread);
+
 Factories
 =========
 
