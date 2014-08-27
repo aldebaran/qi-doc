@@ -143,8 +143,24 @@ signal ``humanDetected``, you may want to enable the image processing code only
 if there is at least one subscriber to the signal to save CPU cycles.
 
 This can be achieved by passing a callback to the `Signal` constructor, of
-signature ``void(bool)``.  This function will be called each time the number of
-subscribers switches between 0 and 1.
+signature ``void(bool)``.  This function will be called *synchronously* each
+time the number of subscribers switches between 0 and 1.
+
+.. code-block:: cpp
+
+  void onConnect(bool c)
+  {
+    if (c)
+      std::cout << "There is at least one connection";
+    else
+      std::cout << "There is no more connection";
+  }
+
+  qi::Signal sig(onConnect);
+  qi::SignalLink l1 = sig.connect(mycallback); // calls onConnect(true)
+  qi::SignalLink l2 = sig.connect(mycallback);
+  sig.disconnect(l1);
+  sig.disconnect(l2); // calls onConnect(false);
 
 Overriding signal triggering behavior (advanced)
 ================================================
