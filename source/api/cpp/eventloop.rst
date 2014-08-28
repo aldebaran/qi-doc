@@ -56,6 +56,23 @@ the maximum is reached. If 20 timeouts happen in a row, the emergency callback
 is called (which may abort execution since a deadlock is likely to have
 occurred).
 
+Customizing the Threadpool Behavior
+-----------------------------------
+
+You can control how the threadpool behaves through environment variables.
+
+- `QI_EVENTLOOP_THREAD_COUNT`: number of threads the eventloop should start
+  with. By default, it will start with one thread per CPU. This is overridden
+  by calling `qi::startEventLoop` explicitly.
+- `QI_EVENTLOOP_MAX_THREADS`: maximum number of threads that the threadpool can
+  have.
+- `QI_EVENTLOOP_GRACE_PERIOD`: time in ms to wait after a failed ping, defaults
+  to 0.
+- `QI_EVENTLOOP_PING_TIMEOUT`: time in ms to wait for a ping response before
+  considering it failed, defaults to 500.
+- `QI_EVENTLOOP_MAX_TIMEOUTS`: number of timeouts before calling the emergency
+  callback, defaults to 20.
+
 Reference
 =========
 
