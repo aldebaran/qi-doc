@@ -27,6 +27,7 @@ Small Changes
   consider using `qi::Path` instead.
 - `qi::Atomic` is now implemented as a wrapper over ``boost::atomic`` and thus
   supports other types than ``int``.
+- `qi::ScopedThreadName` allow to set the current thread name in a RAII fashion
 
 SDK Path
 ********
