@@ -178,6 +178,6 @@ by default.
 Reference
 ---------
 
-.. cpp:autoclass:: qi::Signal
+.. cpp:autoclassinherits:: qi::Signal, qi::SignalF, qi::SignalBase
 
 .. cpp:autoclass:: qi::SignalSubscriber
