@@ -28,12 +28,15 @@ Small Changes
 - `qi::Atomic` is now implemented as a wrapper over ``boost::atomic`` and thus
   supports other types than ``int``.
 - `qi::ScopedThreadName` allow to set the current thread name in a RAII fashion
+- `qi::Session::waitForService` now returns a cancellable future.
+- Python signals can now have an onSubscribers callback (as in C++). See
+  :ref:`documentation<api-py-signal-lazyenable>`.
 
 SDK Path
 ********
 
 The SDK paths returned by libqi (in all `qi::path` methods, like
-`qi::findLib`) are no longer deduced from the running executable
+`qi::path::findLib`) are no longer deduced from the running executable
 (*/proc/self/exe* on Linux) but from
 argv[0]. This change *should* not break existing code since usually the
 executable is the same as argv[0].

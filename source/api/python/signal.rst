@@ -22,6 +22,8 @@ A type can be specified in the constructor of the signal, otherwise any value is
   destruction is also blocking. These two cases may cause deadlocks in your
   code, be careful.
 
+.. _api-py-signal-lazyenable:
+
 Signal lazy enabling
 ====================
 
