@@ -19,25 +19,40 @@ Preparing the package for a python service
 First, write a python file that defines a class corresponding to your service,
 instantiate an object, and :ref:`register it using a session<guide-py-service>`.
 
-Once this script is written, import it in a choregraphe project.
+For the sake of this example, we will reuse the MyFooService object.
+Registration of this object is done in a register_foo_service.py file.
+
+Once this script is written, import it in a choregraphe project, or write a .pml
+and a manifest.xml yourself:
+
+.. code-block:: xml
+
+    <!-- in foo/foo.pml -->
+    <Package>
+      <qipython name="foo" />
+    </Package>
+
+    <!-- in foo/qiproject.xml -->
+    <project version="3">
+      <qipython name="foo">
+        <script src="register_foo_service.py" />
+      </qipython>
+    </project>
 
 You will then need to manually edit the manifest of the application in order to specify
 your script needs to be handled by the service manager.
 
 Edit your behavior manifest and add a 'services' section.
 
-For the sake of this example, we will reuse the MyFooService object.
-Registration of this object is done in a register_foo_service.py file.
 
 .. code-block:: xml
 
-  <package ...>
-    ...
+  <!-- in foo/manifest.xml -->
+  <Package uuid="foo" version="0.1">
     <services>
-        <service name="foo_service" autorun="true" execStart="/usr/bin/python register_foo_service.py" />
+      <service name="foo_service" autorun="true" execStart="python2 bin/register_foo_service.py" />
     </services>
-    ...
-  </package>
+  </Package>
 
 **name** will be used to :ref:`interact with the service manager<manage_service_registration>` from any part of naoqi.
 
@@ -46,7 +61,12 @@ Set **autorun** to true for the script to be automatically executed when naoqi s
 **execStart** contains the command to execute in order to launch the script.
 
 
-You can now package your application and transfer it to the robot.
+You can now package your application and transfer it to the robot, using either Choregraphe or ``qipkg``:
+
+.. code-block:: console
+
+  qipkg make-package foo/foo.pml
+  qipkg deploy-package foo-0.1.pkg
 
 
 Preparing the package for a C++ service
@@ -68,7 +88,20 @@ You will then compile it using the appropriate flags.
 
   qibuild configure -c your-atom-cross-toolchain -p nao --release yourproject
 
-Import the executable in a choregraphe application.
+Import the executable in a choregraphe application, or create a ``yourproject.pml`` file:
+
+.. code-block:: xml
+
+  <!-- in yourproject/yourproject.pml -->
+  <Package>
+    <qibuild name="yourproject" />
+  </Package>
+
+  <!-- in yourproject/qiproject.xml -->
+  <project version="3">
+    <qibuild name="yourproject" />
+  </project>
+
 Then, you will need to edit your manifest to specify that this executable can be launched by
 the service manager.
 
@@ -80,42 +113,34 @@ For the sake of this example, we will use a *my_service* executable.
 
 .. code-block:: xml
 
-  <package ...>
+  <Package uuid="my_package" version="0.1">
     ...
     <executableFiles>
-        <file path="./my_service" />
+      <file path="bin/my_service" />
     </executableFiles>
 
     <services>
-        <service name="my_cpp_service" autorun="true" execStart="./my_service" />
+      <service name="my_cpp_service" autorun="true" execStart="./bin/my_service" />
     </services>
     ...
-  </package>
+  </Package>
 
 
 Packaging and installing the service
 ------------------------------------
 
-We will now create a package by hand.
-Go into the folder containing your application and zip eveything it contains.
+Run ``qipkg make-package /path/to/pml`` to generate the binary package:
 
 .. code-block:: console
 
   cd foo_service_app
-  zip -r foo_service_app.pkg *
+  qipkg make-package foo.pml
 
 Then, you can transfer it on the robot by an external mean. Here we will use scp
 
 .. code-block:: console
 
-  scp foo_service_app.pkg nao@myRobotIp:/home/nao
-
-Use qicli on your robot to install the package.
-More details on qicli in :ref:`guide-qicli`.
-
-.. code-block:: console
-
-  qicli call PackageManager.install /home/nao/foo_service_app.pkg
+  qipkg deploy-package foo.pkg --url nao@myRobotIp
 
 If you want to remove the package, you can use the following command with the application uuid.
 
