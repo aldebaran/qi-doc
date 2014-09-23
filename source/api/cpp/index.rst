@@ -31,6 +31,7 @@ Base:
   os
   path
   periodictask
+  preproc
   property
   session
   signal

@@ -17,3 +17,4 @@ User Guides
   py-service
   py-tonaoqi2
   py-log-client
+  qi-package-services

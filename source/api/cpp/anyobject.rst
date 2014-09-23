@@ -100,4 +100,4 @@ Reference
 
 .. cpp:autotypedef:: qi::AnyObject
 
-.. cpp:autoclass:: qi::Object<T>
+.. cpp:autoclassinherits:: qi::Object, qi::detail::GenericObjectBounce

@@ -30,6 +30,15 @@ durations and time points are expressed in nanoseconds regardless of the
 clock's real resolution. This allows one to write code without caring about
 using ``boost::chrono::duration_cast`` and makes the code cross-platform.
 
+You can also use predefined types for durations and time points (similar to
+boost ones). Keep in mind that you still need to use
+``boost::chrono::duration_cast`` when you need to do a lossy cast.
+
+.. code-block:: cpp
+
+  qi::MicroSeconds us(188800);
+  qi::MilliSeconds ms = boost::chrono::duration_cast<qi::MilliSeconds>(us);
+
 Reference
 ---------
 

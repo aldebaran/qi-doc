@@ -4,19 +4,17 @@
 Handling Paths Guide
 ====================
 
-\defgroup qipath qi::path
-  \brief Provide access to application's path, this include configuration, data, executable and library paths. \n
-         See \ref qipathguide for a global overview of path related functions \n
+Provide access to application's path, this include configuration, data, executable and library paths.
 
 
-  Provide access to various path including:
-  - executables, qi::path::findBin
-  - libraries, qi::pathfindLib
-  - application data qi::path::findData and qi::path::listData
-  - application configuration qi::path::findConf
-  - writable data and configuration paths qi::path::userWritableConfPath, qi::path::userWritableDataPath
+Provide access to various path including:
+  - executables, `qi::path::findBin`
+  - libraries, `qi::path::findLib`
+  - application data `qi::path::findData` and `qi::path::listData`
+  - application configuration `qi::path::findConf`
+  - writable data and configuration paths `qi::path::userWritableConfPath`, `qi::path::userWritableDataPath`
 
-  Since this library is cross-platform we need to take care of different charsets and localizations (UTF-8, UTF-16).
+Since this library is cross-platform we need to take care of different charsets and localizations (UTF-8, UTF-16).
   - Apple OS X always use UTF-8 locale and path.
     OS X provide a Posix API that do not care about locale.
   - Windows (including Cygwin and MinGW) have both 8 bits functions using
@@ -26,13 +24,16 @@ Handling Paths Guide
   - Linux distributions use UTF-8 locale and path by default.
     Linux provide a Posix API that do not care about locale.
 
-  To support internationalization we will always consider path to be encoded in UTF-8 under Windows.
-  We will convert them to UTF-16 to pass them to the native windows API.
-  On Posix platform we have nothing to do.
+To support internationalization we will always consider path to be encoded in UTF-8 under Windows.
+We will convert them to UTF-16 to pass them to the native windows API.
+On Posix platform we have nothing to do.
 
-  We recommand to use boost::filesystem::path with and imbued UTF-8 locale.
-  you could use this code in your main to initialise boost::filesystem locale once:
-  \code
+We recommand to use `boost::filesystem::path` with and imbued UTF-8 locale.
+you could use this code in your main to initialise `boost::filesystem` locale once:
+
+
+.. code-block:: cpp
+
   // create a locale with a unicode facet to convert between char(utf-8) and wchar(utf-16/utf-32)
   std::locale loc(std::locale(), &qi::unicodeFacet());
   // Make boost.filesystem always use the unicode facet
@@ -41,11 +42,6 @@ Handling Paths Guide
   // it's although possible to set the locale as global.
   // This will enable UTF8 supportfor iostream.
   std::locale::global(loc);
-  \endcode
-
-\page qipathguide qi::path Developer Guide
-
-go to the \ref qipath API reference.
 
 
 Overview

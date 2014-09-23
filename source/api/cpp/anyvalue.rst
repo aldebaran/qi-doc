@@ -96,4 +96,4 @@ The same thing can be achieved with registered types.
 Reference
 ---------
 
-.. cpp:autoclass:: qi::AnyValue
+.. cpp:autoclassinherits:: qi::AnyValue, qi::detail::AnyReferenceBase

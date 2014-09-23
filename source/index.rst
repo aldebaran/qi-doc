@@ -27,6 +27,7 @@ User Guides
  - Python: :ref:`guide-py-log-client`
  - Python: :ref:`guide-py-tonaoqi2`
  - :ref:`guide-qicli`
+ - qi: :ref:`guide-qi-package-services`
 
 Design documents
 ================

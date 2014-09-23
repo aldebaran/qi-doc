@@ -26,7 +26,7 @@ how to run qicli
 
 .. code-block:: bash
 
-$ ./qicli cmd args --qi-url IPofYourRobot
+   $ ./qicli cmd args --qi-url IPofYourRobot
 
 qicli info
 ----------
@@ -318,5 +318,3 @@ To send a message with your own Message's category (default: "qicli.qilog.logsen
   Set message verbosity to debug.
 **-l [ --level ] arg (=4)**
   Change the log minimum level: [0-6] (default:4). This option accepts the same arguments' format than --qi-log-level.
-
-

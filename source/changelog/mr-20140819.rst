@@ -1,0 +1,112 @@
+.. _mr-20140819:
+.. cpp:namespace:: qi
+.. cpp:auto_template:: True
+.. default-role:: cpp:guess
+
+Merge Request - August 2014 bis
+===============================
+
+Overview
+********
+
+This release is again about bugfixes, test fixes and documentation improvement,
+with some small features.
+
+Small Changes
+*************
+
+- AnyFunction was documented and a call method was added for easier use.
+- Some static initialization races were fixed in the type system, it should fix
+  a lot of Choregraphe crashes on Windows.
+- Session::loadService now accepts extra arguments to give to the factory (if,
+  in addition to all of the arguments, the factory accepts a qi::Session as a
+  first argument, it will be given to it).
+- *qi/qi.hpp* is now deprecated. The only function it contained was
+  `qi::unicodeFacet` which was useful when used with ``boost::path``. If you
+  really need it, this function was moved to *qi/path.hpp*. You should also
+  consider using `qi::Path` instead.
+- `qi::Atomic` is now implemented as a wrapper over ``boost::atomic`` and thus
+  supports other types than ``int``.
+- `qi::ScopedThreadName` allow to set the current thread name in a RAII fashion
+- `qi::Session::waitForService` now returns a cancellable future.
+- Python signals can now have an onSubscribers callback (as in C++). See
+  :ref:`documentation<api-py-signal-lazyenable>`.
+
+SDK Path
+********
+
+The SDK paths returned by libqi (in all `qi::path` methods, like
+`qi::path::findLib`) are no longer deduced from the running executable
+(*/proc/self/exe* on Linux) but from
+argv[0]. This change *should* not break existing code since usually the
+executable is the same as argv[0].
+
+However, this implies changes for Python in case of deploys. Currently, the
+returned paths were always taken from */usr* since the executable was
+*/usr/bin/python2.7*. They will now be deduced relatively to the python script
+if it is located in a SDK, with a fallback to the old behavior.  This is useful
+for dynamic module loading.
+
+LogManager
+**********
+
+The LogManager now holds a ring buffer that allows to get past logs coming
+before you register your LogListener to it.
+
+- There is a ring buffer of 500 messages.
+- You can get it by subscribing to onLogMessagesWithBacklog.
+
+.. code-block:: cpp
+
+  void onLogMessages(std::vector<qi::LogMessage> msgs)
+  {
+    for (unsigned int i = 0; i < msgs.size(); ++i)
+    {
+      qi::LogMessage msg = msgs.at(i);
+      std::stringstream ss;
+      ss << msg.level
+         << " " << msg.category
+         << " " << msg.message
+         << std::endl;
+      std::cout << ss.str() << std::endl;
+    }
+  }
+
+  int main(int argc, char** argv)
+  {
+    qi::ApplicationSession app(argc, argv);
+    app.start();
+
+    app.loadModule("qicore");
+
+    qi::LogListenerPtr listener = logger->getListener();
+
+    listener->onLogMessagesWithBacklog.connect(&onLogMessages);
+    app.run();
+  }
+
+Bug fixes
+*********
+
+Signal connection bug
+---------------------
+
+In the following code:
+
+.. code-block:: cpp
+
+  qi::AnyObject obj = ...;
+  obj.connect("signal", &myCallback);
+
+``myCallback`` would be called synchronously by the signal handler. It will now
+be called asynchronously as the user would expect.
+
+Redmine issues
+--------------
+
+- https://redmine/issues/16461
+- https://redmine/issues/17970
+- https://redmine/issues/15310
+- https://redmine/issues/20594
+- https://redmine/issues/24281
+- https://redmine/issues/24333
